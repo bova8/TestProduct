@@ -28,13 +28,9 @@ public class PaymentControllerTest {
 
     @Test
     void testPutProductOk() throws Exception {
-        Payment payment = new Payment();
-        payment.setCustomer("123456789");
-        payment.setSeller("123456789");
-        Product product = new Product();
-        product.setCode("1234567890123");
-        product.setName("milk");
-        payment.setProducts(Arrays.asList(product));
+        Product product = new Product("1234567890123", "milk");
+        Payment payment = new Payment("123456789", "123456789", Arrays.asList(product));
+
         mockMvc.perform(post("/postPayment")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(payment))
@@ -43,13 +39,8 @@ public class PaymentControllerTest {
 
     @Test
     void testPutProductnNokBadCustomer() throws Exception {
-        Payment payment = new Payment();
-        payment.setCustomer("123"); // bad length
-        payment.setSeller("123456789");
-        Product product = new Product();
-        product.setCode("1234567890123");
-        product.setName("milk");
-        payment.setProducts(Arrays.asList(product));
+        Product product = new Product("1234567890123", "milk");
+        Payment payment = new Payment("123", "123456789", Arrays.asList(product));
         mockMvc.perform(post("/postPayment")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(payment))
